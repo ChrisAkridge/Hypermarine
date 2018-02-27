@@ -7,13 +7,8 @@ using Hypermarine.Models;
 
 namespace Hypermarine.Data
 {
-	public sealed class ModelInitializer : DropCreateDatabaseAlways<Context>
+	public sealed class ModelInitializer : DropCreateDatabaseIfModelChanges<Context>
 	{
-		public static void Initialize()
-		{
-			Database.SetInitializer(new ModelInitializer());
-		}
-
 		protected override void Seed(Context context)
 		{
 			context.Users.Add(new User() { Id = 1, Name = "Admin" });
@@ -22,7 +17,7 @@ namespace Hypermarine.Data
 
 			context.Posts.Add(new Post() { Id = 1, Title = "Hello, world!", Link = "http://example.com", UserId = 1, Score = 1200, PostedOn = DateTime.Now });
 			context.Posts.Add(new Post() { Id = 2, Title = "Social Security", Link = "https://www.ssa.gov", UserId = 2, Score = 2, PostedOn = DateTime.Now - TimeSpan.FromHours(1d) });
-			context.Posts.Add(new Post() { Id = 3, Title = "LISTEN TO MORE METAL!!!!!1111!!111!1", Link = "https://en.wikipedia.org/wiki/Heavy_metal_music", UserId = 3, Score = int.MinValue, PostedOn = DateTime.Now - TimeSpan.FromDays(365d * 1000d) });
+			context.Posts.Add(new Post() { Id = 3, Title = "LISTEN TO MORE METAL!!!!!1111!!111!1", Link = "https://en.wikipedia.org/wiki/Heavy_metal_music", UserId = 3, Score = int.MinValue, PostedOn = DateTime.Now - TimeSpan.FromDays(365d * 10d) });
 
 			context.Comments.Add(new Comment()
 			{

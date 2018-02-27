@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Hypermarine.Data;
 
 namespace Hypermarine.Controllers
 {
@@ -15,7 +16,10 @@ namespace Hypermarine.Controllers
 
 		public ActionResult About()
 		{
-			ViewBag.Message = "Your application description page.";
+			using (var db = new Context())
+			{
+				ViewBag.Message = db.Users.First().Name;
+			}
 
 			return View();
 		}

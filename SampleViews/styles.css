@@ -1,0 +1,116 @@
+header
+{
+	display: flex;
+	justify-content: space-between;
+	background-color: #cccccc;
+}
+
+#logo
+{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.5rem;
+	padding: 10px 10px 10px 10px;
+	border-right: 1px solid darkgray;
+}
+
+#logo-link {
+	color: black;
+	text-decoration: none;
+}
+
+#controls-container
+{
+	display: flex;
+	align-items: center;
+	padding: 0 10px 0 10px;
+	font-family: 'Open Sans', serif;
+	font-size: 0.9rem;
+	border-left: 1px solid darkgray;
+}
+
+#username-container
+{
+	padding-right: 10px;
+}
+
+#login-button-container
+{
+	padding: 10px;
+	background-color: blue;
+	border-radius: 15px;
+}
+
+#login
+{
+	color: white;
+	text-decoration: none;
+}
+
+#post-container
+{
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.post
+{
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.post-score-container
+{
+	display: flex;
+	width: 80px;
+	flex-direction: column;
+	justify-content: center;
+	margin-right: 10px;
+	text-align: center;
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	font-size: 85%;
+	background-color: #eeeeee;
+	color: #7171f7;
+	padding-bottom: 4px;
+	border-bottom: 1px solid lightgray;
+}
+
+.post-vote-up { order: 0; }
+.post-score { order: 1; }
+.post-vote-down { order: 2; }
+
+.post-header
+{
+	display: flex;
+}
+
+.post-title
+{
+	font-family: 'Open Sans', sans-serif;
+	margin-right: 10px;
+	font-size: 1.25rem;
+}
+
+.post-author-time
+{
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	font-size: 0.80rem;
+	align-self: flex-end;
+	color: #777777;
+}
+
+.post-controls
+{
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	font-size: 80%;
+	margin-top: 5px;
+}
+
+.post-controls>a
+{
+	color: #3d5e6d;
+	text-decoration: none;
+	margin-right: 5px;
+}
