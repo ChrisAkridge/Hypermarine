@@ -1,31 +1,33 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Hypermarine";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<section id="post-container">
+    @{ int i = 0; }
+    @foreach (var post in (List<Hypermarine.Models.Post>)Model)
+    {
+    <div class="post" id="@Html.AttributeEncode("post-" + i.ToString())">
+        <div class="post-score-container">
+            <div class="post-vote-up" id="vote-up-@{i.ToString();}">▲</div>
+            <div class="post-vote-down" id="vote-down-@{i.ToString();}">▼</div>
+            <div class="post-score" id="post-score-@{i.ToString();}">@post.Score</div>
+        </div>
+        <div class="post-data" id="@Html.AttributeEncode("post-data-" + i.ToString())">
+            <div class="post-header">
+                <div class="post-title" id="@Html.AttributeEncode("post-title-" + i.ToString())">
+                    @post.Title
+                </div>
+                <div class="post-author-time" id="@Html.AttributeEncode("post-author-time-" + i.ToString())" title="@Helpers.DateTimeToTZQualifiedString(post.PostedOn)">
+                    Posted by @post.User.Name @Helpers.DateTimeToTimeAgo(post.PostedOn)
+                </div>
+            </div>
+            <div class="post-controls" id="@Html.AttributeEncode("post-controls-" + i.ToString())">
+                <a href="#" class="post-control" id="@Html.AttributeEncode("post-comments-" + i.ToString())">comments</a>
+                <a href="#" class="post-control" id="@Html.AttributeEncode("post-edit-" + i.ToString())">edit</a>
+                <a href="#" class="post-control" id="@Html.AttributeEncode("post-delete-" + i.ToString())">delete</a>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    i++;
+    }
+</section>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,26 +10,30 @@ namespace Hypermarine.Controllers
 {
 	public class HomeController : Controller
 	{
+		private Context context;
+		private bool disposed = false;
+
+		public HomeController()
+		{
+			context = new Context();
+		}
+
 		public ActionResult Index()
 		{
-			return View();
+			var posts = context.Posts
+				.Include(p => p.User)
+				.OrderBy(p => p.Score)
+				.ToList();
+
+			return View(posts);
 		}
 
-		public ActionResult About()
+		protected override void Dispose(bool disposing)
 		{
-			using (var db = new Context())
-			{
-				ViewBag.Message = db.Users.First().Name;
-			}
-
-			return View();
-		}
-
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
-
-			return View();
+			if (disposed) { return; }
+			if (disposing) { context.Dispose();  }
+			disposed = true;
+			base.Dispose(disposing);
 		}
 	}
 }
