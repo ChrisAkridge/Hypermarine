@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+}
+
+@{ var post = (Hypermarine.Models.Post)Model; }
+
+<section id="post-detail-container">
+    <div class="post" id="post-detail">
+        <div class="post-score-container">
+            <div class="post-vote-up" id="vote-up">▲</div>
+            <div class="post-vote-down" id="vote-down">▼</div>
+            <div class="post-score" id="post-score">@post.Score</div>
+        </div>
+        <div class="post-data" id="post-data">
+            <div class="post-header">
+                <div class="post-title" id="post-title">
+                    @post.Title
+                </div>
+                <div class="post-author-time" id="post-author-time" title="@Helpers.DateTimeToTZQualifiedString(post.PostedOn)">
+                    Posted by @post.User.Name @Helpers.DateTimeToTimeAgo(post.PostedOn)
+                </div>
+            </div>
+            <div class="post-controls" id="post-controls">
+                <a href="#" class="post-control" id="post-comments">comments</a>
+                <a href="#" class="post-control" id="post-edit">edit</a>
+                <a href="#" class="post-control" id="post-delete">delete</a>
+            </div>
+        </div>
+    </div>
+</section>
+<hr />
+<section id="post-comments-container">
+    <h2>Comments</h2>
+    @{ int i = 0;}
+    @foreach (var comment in post.Comments)
+    {
+    <div class="post-comment" id="@Html.AttributeEncode("comment-" + i.ToString())">
+        <div class="comment-data-container">
+            <div class="comment-user-container">
+                <div class="comment-user" id="@Html.AttributeEncode("comment-user-" + i.ToString())">
+                    @comment.User.Name
+                </div>
+                <div class="comment-text" id="@Html.AttributeEncode("comment-text-" + i.ToString())">
+                    @comment.Text
+                </div>
+            </div>
+        </div>
+    </div>
+    i++;
+    }
+</section>

@@ -9,7 +9,7 @@ namespace Hypermarine
 	{
 		public static string DateTimeToTZQualifiedString(DateTime dateTime)
 		{
-			return dateTime.ToString("YYYY-MM-dd hh:mm:ss tt zzz");
+			return dateTime.ToString("yyyy-MM-dd hh:mm:ss tt zzz");
 		}
 
 		public static string DateTimeToTimeAgo(DateTime dateTime)
