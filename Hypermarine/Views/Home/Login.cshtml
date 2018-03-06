@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    ViewBag.ErrorText = null;
+}
+
+<h2>@ViewBag.HeaderText</h2>
+
+
+@using (Html.BeginForm((ViewBag.HeaderText == "Login") ? "Login" : "Signup", "Home"))
+{
+    <label for="username" id="username-label">Username: </label>
+    <input type="text" name="username" id="username" />
+    <input type="submit" />
+}
+
+@if (ViewBag.ErrorText != null)
+{
+    <span class="error">@ViewBag.ErrorText</span>
+}

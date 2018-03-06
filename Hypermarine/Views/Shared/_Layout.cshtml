@@ -17,14 +17,29 @@
         </div>
         <div id="controls-container">
             <div id="username-container">
-                <div id="username">
-                    <span>Hello! You are not signed in.</span>
-                </div>
-            </div>
-            <div id="login-button-container">
-                <div id="login-button">
-                    <a href="#" id="login">Login</a>
-                </div>
+                    @if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("username"))
+                    {
+                        <div id="username">Welcome! You are not signed in.</div>
+                        <div id="login-button-container">
+                            <div id="login-button">
+                                <a href="@Url.Action("Login", "Home", null)" id="login">Login</a>
+                            </div>
+                        </div>
+                        <div id="signup-button-container">
+                            <div id="signup-button">
+                                <a href="@Url.Action("Signup", "Home", null)" id="signup">Signup</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="username">Welcome, @Request.Cookies["username"].Value!</div>
+                        <div id="login-button-container">
+                            <div id="login-button">
+                                <a href="@Url.Action("Logout", "Home", null)" id="login">Logout</a>
+                            </div>
+                        </div>
+                    }
             </div>
         </div>
     </header>
