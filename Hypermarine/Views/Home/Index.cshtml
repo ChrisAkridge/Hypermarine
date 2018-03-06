@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="post-controls" id="@Html.AttributeEncode("post-controls-" + i.ToString())">
-                <a href="#" class="post-control" id="@Html.AttributeEncode("post-comments-" + i.ToString())">comments</a>
+                <a href="@("/Comments/Detail/" + post.Id.ToString())" class="post-control" id="@Html.AttributeEncode("post-comments-" + i.ToString())"> @(post.Comments.Count) comments</a>
                 <a href="#" class="post-control" id="@Html.AttributeEncode("post-edit-" + i.ToString())">edit</a>
                 <a href="#" class="post-control" id="@Html.AttributeEncode("post-delete-" + i.ToString())">delete</a>
             </div>
@@ -30,4 +30,8 @@
     </div>
     i++;
     }
+
+    <div id="new-post-container">
+        <a id="new-post-button" href="@Url.Action("NewPost")">New Post</a>
+    </div>
 </section>

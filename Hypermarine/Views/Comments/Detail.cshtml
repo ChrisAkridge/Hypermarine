@@ -15,7 +15,7 @@
         <div class="post-data" id="post-data">
             <div class="post-header">
                 <div class="post-title" id="post-title">
-                    @post.Title
+                    <a href="@(post.Link)">@post.Title</a>
                 </div>
                 <div class="post-author-time" id="post-author-time" title="@Helpers.DateTimeToTZQualifiedString(post.PostedOn)">
                     Posted by @post.User.Name @Helpers.DateTimeToTimeAgo(post.PostedOn)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Hypermarine.Data;
+using Hypermarine.Models;
 
 namespace Hypermarine.Controllers
 {
@@ -22,6 +23,7 @@ namespace Hypermarine.Controllers
 		{
 			var posts = context.Posts
 				.Include(p => p.User)
+				.Include(p => p.Comments)
 				.OrderBy(p => p.Score)
 				.ToList();
 
@@ -82,9 +84,6 @@ namespace Hypermarine.Controllers
 		[ActionName("Signup")]
 		public ActionResult SignupPost()
 		{
-			// WYLO: add new post page, plus add comment form for logged in users on comment
-			// detail page
-
 			string username = Request.Form["username"];
 
 			if (context.Users.Any(u => u.Name == username))
@@ -103,6 +102,35 @@ namespace Hypermarine.Controllers
 				LoginAs(username);
 				return RedirectToAction("Index");
 			}
+		}
+
+		public ActionResult NewPost()
+		{
+			if (Request.Cookies["username"] == null)
+			{
+				return RedirectToAction("Login");
+			}
+
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult NewPost(Post post)
+		{
+			var username = Request.Cookies["username"].Value;
+
+			var dbPost = new Post()
+			{
+				Title = post.Title,
+				Link = post.Link,
+				PostedOn = DateTime.Now,
+				UserId = context.Users.SingleOrDefault(u => u.Name == username).Id
+			};
+
+			context.Posts.Add(dbPost);
+			context.SaveChanges();
+
+			return Redirect("~/Comments/Detail/" + dbPost.Id.ToString());
 		}
 
 		protected override void Dispose(bool disposing)
