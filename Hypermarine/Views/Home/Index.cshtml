@@ -8,14 +8,14 @@
     {
     <div class="post" id="@Html.AttributeEncode("post-" + i.ToString())">
         <div class="post-score-container">
-            <div class="post-vote-up" id="vote-up-@{i.ToString();}">▲</div>
-            <div class="post-vote-down" id="vote-down-@{i.ToString();}">▼</div>
-            <div class="post-score" id="post-score-@{i.ToString();}">@post.Score</div>
+            <div class="post-vote-up" id="vote-up-@(post.Id)" onclick="vote(@(post.Id), 1)">▲</div>
+            <div class="post-vote-down" id="vote-down-@(post.Id)" onclick="vote(@(post.Id), -1)">▼</div>
+            <div class="post-score" id="post-score-@(post.Id)">@post.Score</div>
         </div>
         <div class="post-data" id="@Html.AttributeEncode("post-data-" + i.ToString())">
             <div class="post-header">
                 <div class="post-title" id="@Html.AttributeEncode("post-title-" + i.ToString())">
-                    @post.Title
+                    <a href="@(post.Link)">@post.Title</a>
                 </div>
                 <div class="post-author-time" id="@Html.AttributeEncode("post-author-time-" + i.ToString())" title="@Helpers.DateTimeToTZQualifiedString(post.PostedOn)">
                     Posted by @post.User.Name @Helpers.DateTimeToTimeAgo(post.PostedOn)
@@ -23,8 +23,8 @@
             </div>
             <div class="post-controls" id="@Html.AttributeEncode("post-controls-" + i.ToString())">
                 <a href="@("/Comments/Detail/" + post.Id.ToString())" class="post-control" id="@Html.AttributeEncode("post-comments-" + i.ToString())"> @(post.Comments.Count) comments</a>
-                <a href="#" class="post-control" id="@Html.AttributeEncode("post-edit-" + i.ToString())">edit</a>
-                <a href="#" class="post-control" id="@Html.AttributeEncode("post-delete-" + i.ToString())">delete</a>
+                <a href="@("/Home/EditPost/" + post.Id.ToString())" class="post-control" id="@Html.AttributeEncode("post-edit-" + i.ToString())">edit</a>
+                <a href="@("/Home/DeletePost/" + post.Id.ToString())" class="post-control" id="@Html.AttributeEncode("post-delete-" + i.ToString())">delete</a>
             </div>
         </div>
     </div>
@@ -35,3 +35,5 @@
         <a id="new-post-button" href="@Url.Action("NewPost")">New Post</a>
     </div>
 </section>
+
+<script src="~/Scripts/voting.js"></script>

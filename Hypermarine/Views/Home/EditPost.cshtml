@@ -1,0 +1,21 @@
+﻿@model Hypermarine.Models.Post
+
+@{
+    ViewBag.Title = "Edit Post";
+}
+
+<h2>Edit Post</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(p => p.Id)
+
+    @Html.LabelFor(p => p.Title, "Title")
+    @Html.TextBoxFor(p => p.Title)
+
+    @Html.LabelFor(p => p.Link, "Link")
+    @Html.TextBoxFor(p => p.Link);
+
+    <button type="submit">Post</button>
+    <a href="@Url.Action("Home/Index")">Cancel</a>
+}

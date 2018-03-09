@@ -1,16 +1,17 @@
-﻿
+﻿@model Hypermarine.Models.Comment
+
 @{
     ViewBag.Title = "Detail";
 }
 
-@{ var post = (Hypermarine.Models.Post)Model; }
+@{ var post = ViewBag.Post; }
 
 <section id="post-detail-container">
     <div class="post" id="post-detail">
         <div class="post-score-container">
-            <div class="post-vote-up" id="vote-up">▲</div>
-            <div class="post-vote-down" id="vote-down">▼</div>
-            <div class="post-score" id="post-score">@post.Score</div>
+            <div class="post-vote-up" id="vote-up-@(post.Id)" onclick="vote(@(post.Id), 1)">▲</div>
+            <div class="post-vote-down" id="vote-down-@(post.Id)" onclick="vote(@(post.Id), -1)">▼</div>
+            <div class="post-score" id="post-score-@(post.Id)">@post.Score</div>
         </div>
         <div class="post-data" id="post-data">
             <div class="post-header">
@@ -23,30 +24,46 @@
             </div>
             <div class="post-controls" id="post-controls">
                 <a href="#" class="post-control" id="post-comments">comments</a>
-                <a href="#" class="post-control" id="post-edit">edit</a>
-                <a href="#" class="post-control" id="post-delete">delete</a>
+                <a href="@("/Home/EditPost/" + post.Id.ToString())" class="post-control" id="post-edit">edit</a>
+                <a href="@("/Home/DeletePost/" + post.Id.ToString())" class="post-control" id="post-delete">delete</a>
             </div>
         </div>
     </div>
 </section>
 <hr />
 <section id="post-comments-container">
+    @if (Request.Cookies["username"] != null)
+    {
+    <h2>Post a Comment as @(Request.Cookies["username"].Value)</h2>
+        using (Html.BeginForm())
+        {
+            @Html.LabelFor(c => c.Text, "Text");
+            @Html.TextAreaFor(c => c.Text, 5, 40, null);
+            <button type="submit">Post</button>
+        }
+
+    }
+
     <h2>Comments</h2>
     @{ int i = 0;}
     @foreach (var comment in post.Comments)
     {
     <div class="post-comment" id="@Html.AttributeEncode("comment-" + i.ToString())">
         <div class="comment-data-container">
-            <div class="comment-user-container">
-                <div class="comment-user" id="@Html.AttributeEncode("comment-user-" + i.ToString())">
-                    @comment.User.Name
-                </div>
-                <div class="comment-text" id="@Html.AttributeEncode("comment-text-" + i.ToString())">
-                    @comment.Text
-                </div>
+            <div class="comment-user" id="@Html.AttributeEncode("comment-user-" + i.ToString())">
+                @comment.User.Name
             </div>
+            <div class="comment-text" id="@Html.AttributeEncode("comment-text-" + i.ToString())">
+                @comment.Text
+            </div>
+        </div>
+        <div class="comment-controls-container">
+            <a href="@("/Home/EditComment/" + comment.Id.ToString())" class="comment-control" id="@("comment-edit-" + comment.Id.ToString())">edit</a>
+            <a href="@("/Home/DeleteComment/" + comment.Id.ToString())" class="comment-control" id="@("comment-delete-" + comment.Id.ToString())">delete</a>
         </div>
     </div>
     i++;
     }
 </section>
+
+<script src="~/Scripts/voting.js"></script>

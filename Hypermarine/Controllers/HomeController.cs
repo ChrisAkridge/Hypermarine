@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Hypermarine.Data;
@@ -24,7 +25,7 @@ namespace Hypermarine.Controllers
 			var posts = context.Posts
 				.Include(p => p.User)
 				.Include(p => p.Comments)
-				.OrderBy(p => p.Score)
+				.OrderByDescending(p => p.Score)
 				.ToList();
 
 			return View(posts);
@@ -131,6 +132,102 @@ namespace Hypermarine.Controllers
 			context.SaveChanges();
 
 			return Redirect("~/Comments/Detail/" + dbPost.Id.ToString());
+		}
+
+		public ActionResult EditPost(int? id)
+		{
+			if (Request.Cookies["username"] == null)
+			{
+				return RedirectToAction("Login");
+			}
+			else if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var post = context.Posts.Single(p => p.Id == id);
+			return View(post);
+		}
+
+		[HttpPost]
+		public ActionResult EditPost(Post post)
+		{
+			var dbPost = context.Posts.Single(p => p.Id == post.Id);
+			dbPost.Title = post.Title;
+			dbPost.Link = post.Link;
+			context.SaveChanges();
+
+			return Redirect("~/Comments/Detail/" + dbPost.Id.ToString());
+		}
+
+		public ActionResult DeletePost(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var post = context.Posts.Single(p => p.Id == id);
+			context.Entry(post).State = EntityState.Deleted;
+			context.SaveChanges();
+
+			return RedirectToAction("Index", "Home");
+		}
+
+		public ActionResult EditComment(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var dbComment = context.Comments.Single(c => c.Id == id.Value);
+
+			return View(dbComment);
+		}
+
+		[HttpPost]
+		public ActionResult EditComment(int? id, Comment comment)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var dbComment = context.Comments.Single(c => c.Id == id.Value);
+			dbComment.Text = comment.Text;
+			context.SaveChanges();
+
+			return Redirect("~/Comments/Detail/" + dbComment.PostId.ToString());
+		}
+
+		public ActionResult DeleteComment(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var dbComment = context.Comments.Single(c => c.Id == id.Value);
+			context.Entry(dbComment).State = EntityState.Deleted;
+			context.SaveChanges();
+
+			return Redirect("~/Comments/Detail/" + dbComment.PostId.ToString());
+		}
+
+		public ActionResult Vote(int? id, string direction)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var dbPost = context.Posts.Single(p => p.Id == id.Value);
+			if (direction == "p") { dbPost.Score++; }
+			else { dbPost.Score--; }
+			context.SaveChanges();
+
+			return Content(dbPost.Score.ToString());
 		}
 
 		protected override void Dispose(bool disposing)
