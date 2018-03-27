@@ -94,7 +94,7 @@ namespace Hypermarine.Controllers
 			}
 			else
 			{
-				context.Users.Add(new Models.User()
+				context.Users.Add(new User()
 				{
 					Name = username
 				});
@@ -168,6 +168,13 @@ namespace Hypermarine.Controllers
 			}
 
 			var post = context.Posts.Single(p => p.Id == id);
+
+			var postComments = context.Comments.Where(c => c.PostId == id);
+			foreach (var postComment in postComments)
+			{
+				context.Entry(postComment).State = EntityState.Deleted;
+			}
+
 			context.Entry(post).State = EntityState.Deleted;
 			context.SaveChanges();
 
