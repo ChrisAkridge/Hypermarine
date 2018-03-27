@@ -4,14 +4,18 @@
     ViewBag.ErrorText = null;
 }
 
-<h2>@ViewBag.HeaderText</h2>
+<h2 class="page-header">@ViewBag.HeaderText</h2>
 
-
-@using (Html.BeginForm((ViewBag.HeaderText == "Login") ? "Login" : "Signup", "Home"))
+@using (Html.BeginForm((ViewBag.HeaderText == "Login") ? "Login" : "Signup", "Home",
+    null, FormMethod.Post, new { @class = "login-form" }))
 {
-    <label for="username" id="username-label">Username: </label>
-    <input type="text" name="username" id="username" />
-    <input type="submit" />
+    <div class="form-row">
+        <label for="username" class="form-label" id="username-label">Username: </label>
+        <input type="text" name="username" class="form-field "id="username" />
+    </div>
+    <div class="form-submit-row">
+        <input type="submit" value="@ViewBag.HeaderText" class="form-submit" id="login-submit" />
+</div>
 }
 
 @if (ViewBag.ErrorText != null)

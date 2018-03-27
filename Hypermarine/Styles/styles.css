@@ -36,13 +36,14 @@
     padding-right: 10px;
 }
 
-#login-button-container {
+#login-button-container, #signup-button-container {
     padding: 10px;
     background-color: blue;
     border-radius: 15px;
+    margin-right: 5px;
 }
 
-#login {
+#login, #signup {
     color: white;
     text-decoration: none;
 }
@@ -116,6 +117,21 @@
     margin-right: 5px;
 }
 
+#new-post-container {
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+
+#new-post-button {
+    font-family: 'Open Sans', sans-serif;
+    background-color: blue;
+    padding: 10px;
+    border-radius: 15px;
+    color: white;
+    text-decoration: none;
+}
+
 #post-comments-container {
     margin-left: 10px;
 }
@@ -139,4 +155,60 @@
 .comment-text {
     font-family: 'Lora', sans-serif;
     font-size: 110%;
+}
+
+.page-header {
+    font-family: 'Open Sans', sans-serif;
+    margin-left: 10px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.form-row,
+.form-submit-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+
+.form-label {
+    font-family: 'Open Sans', sans-serif;
+    margin-right: 5px;
+}
+
+.form-field {
+    flex-grow: 1;
+}
+
+.form-submit,
+.form-cancel {
+    flex-grow: 1;
+}
+
+.form-cancel {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #af0000;
+    color: white;
+    text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+@media screen and (min-width: 720px) {
+    form {
+        font-size: 1rem;
+        max-width: 90%;
+        margin: 0 auto;
+    }
 }

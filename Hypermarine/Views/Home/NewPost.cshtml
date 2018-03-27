@@ -5,16 +5,22 @@
     ViewBag.Title = "New Post";
 }
 
-<h2>New Post</h2>
+<h2 class="page-header">New Post</h2>
 
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(p => p.Title, "Title")
-    @Html.TextBoxFor(p => p.Title)
+    <div class="form-row">
+    @Html.LabelFor(p => p.Title, "Title", new { @class = "form-label" })
+    @Html.TextBoxFor(p => p.Title, new { @class = "form-field" })
+    </div>
 
-    @Html.LabelFor(p => p.Link, "Link")
-    @Html.TextBoxFor(p => p.Link);
+    <div class="form-row">
+    @Html.LabelFor(p => p.Link, "Link", new { @class = "form-label" })
+    @Html.TextBoxFor(p => p.Link, new { @class = "form-field" })
+    </div>
 
-    <button type="submit">Post</button>
-    <a href="@Url.Action("Home/Index")">Cancel</a>
+    <div class="form-row form-submit-row">
+    <button class="form-submit" type="submit">Post</button>
+    <a class="form-cancel" href="@Url.Action("Index")">Cancel</a>
+    </div>
 }
